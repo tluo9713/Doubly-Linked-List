@@ -1,6 +1,17 @@
 //Create a Doubly Linked List with the methods:
-//push, pop,
+//push, pop, shift, unshift, remove, set, get
+//A doubly linked list is an extension of a linked list. It is an abstract data
+//structure that can be used to solve certain problems. A Singly Linked List will
+//mostly have the same properties with the only exception that it can not traverse
+//backwards.
+//Advantages of Linked List. You do not need to declare the length to begin with,
+//adding and removing nodes from the beginning or end are both O(1). These
+//strengths are great to use in Stacks and Queues problems.
+//Disadvantages of Linked List, traversing a linked list is an O(n) operation,
+//same goes for searching. It's also not a built in data structure in JS so we
+//must create it ourselves.
 
+//class node will be used in linked list to hold data
 class Node {
   constructor(val) {
     this.val = val;
@@ -10,11 +21,16 @@ class Node {
 }
 
 class DoublyLinkedList {
-  constructor(val) {
+  constructor() {
     this.head = null;
     this.tail = null;
     this.length = 0;
   }
+  //Adds an node to the end of the DLL. This is an O(1) operation as you only
+  //need to append to the end, and in this DLL this.tail is accessible.
+  //Edge cases to watch out for, if the DLL is empty, and remembering that this
+  //is DLL so you must add the link from the tail to new node as well as new node
+  //to tail
   push(val) {
     let node = new Node(val);
     if (this.length === 0) {
