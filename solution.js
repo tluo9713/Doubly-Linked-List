@@ -1,5 +1,5 @@
 //Create a Doubly Linked List with the methods:
-//push, pop, shift, unshift, remove, set, get
+//push, pop, shift, unshift, remove, set, get, insert, and reverse
 //A doubly linked list is an extension of a linked list. It is an abstract data
 //structure that can be used to solve certain problems. A Singly Linked List will
 //mostly have the same properties with the only exception that it can not traverse
@@ -133,5 +133,48 @@ class DoublyLinkedList {
       nodeCount++;
     }
     return node;
+  }
+  insert(idx, val) {
+    if (this.length < idx) return false;
+    if (idx < 0) return false;
+    let newNode = new Node(val);
+    let node = this.head;
+    let nodeCount = 0;
+    while (nodeCount < idx) {
+      nodeCount++;
+      node = node.next;
+    }
+    if (this.length === idx) {
+      this.tail.next = node;
+      node.prev = this.tail;
+      this.tail = node;
+    } else {
+      newNode.prev = node.prev;
+      newNode.next = node;
+      node.prev.next = newNode;
+      node.prev = newNode;
+    }
+    this.length++;
+    return true;
+  }
+  reverse() {
+    if (this.length === 0) return null;
+    let node = this.head;
+    let prevNode;
+    while (node) {
+      let nextNode = node.next;
+      if (node === this.head) {
+        node.prev = node.next;
+        node.next = null;
+        this.tail = node;
+      } else {
+        node.prev = node.next;
+        node.next = prevNode;
+      }
+      prevNode = node;
+      node = nextNode;
+    }
+    this.head = prevNode;
+    return this;
   }
 }
