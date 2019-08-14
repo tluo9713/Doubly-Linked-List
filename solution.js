@@ -26,11 +26,11 @@ class DoublyLinkedList {
     this.tail = null;
     this.length = 0;
   }
-  //Adds an node to the end of the DLL. This is an O(1) operation as you only
+  //Adds a node to the end of the DLL. This is an O(1) time operation as you only
   //need to append to the end, and in this DLL this.tail is accessible.
   //Edge cases to watch out for, if the DLL is empty, and remembering that this
   //is DLL so you must add the link from the tail to new node as well as new node
-  //to tail
+  //to tail. Returning this so you can chain methods on it.
   push(val) {
     let node = new Node(val);
     if (this.length === 0) {
@@ -44,7 +44,9 @@ class DoublyLinkedList {
     this.length++;
     return this;
   }
-
+  //Removes a node from the end of DLL. O(1) time operation. Access DLL tail and
+  //then go to previous node. Remove that node and return it.
+  //Edge cases: If there are no nodes in DLL or if there is only one node in DLL.
   pop() {
     if (this.tail === null) return undefined;
     let node = this.tail;
@@ -59,19 +61,10 @@ class DoublyLinkedList {
     this.length--;
     return node;
   }
-  shift() {
-    if (this.length === 0) return undefined;
-    let node = this.head;
-    if (this.length === 1) {
-      this.head = null;
-      this.tail = null;
-    } else {
-      this.head = this.head.next;
-      this.head.prev = null;
-    }
-    this.length--;
-    return node;
-  }
+  //Adds a node at the beginning of DLL. O(1) time operation. Access the head
+  //and make the previous point to new node and new node point to head. Then
+  //reassign head. Returns DLL if you wanted to chain.
+  //Edge cases to watch out for, empty DLL
   unshift(val) {
     let node = new Node(val);
     if (this.length === 0) {
@@ -85,6 +78,25 @@ class DoublyLinkedList {
     this.length++;
     return this;
   }
+  //Removes node from beginning of DLL. O(1) time operation. Access the head and
+  //detach it from next. Assigns new head. Returns the node.
+  //Edge cases: Empty DLL
+  shift() {
+    if (this.length === 0) return undefined;
+    let node = this.head;
+    if (this.length === 1) {
+      this.head = null;
+      this.tail = null;
+    } else {
+      this.head = this.head.next;
+      this.head.prev = null;
+    }
+    this.length--;
+    return node;
+  }
+  //Removes the nth node from head. O(n) operation because you must traverse
+  //the DLL to access the node and then detach it. Return node removed.
+  //Edge cases: Remove from beginning, end or if there is only one node.
   remove(idx) {
     if (idx > this.length) return undefined;
     if (this.head === null) return undefined;
@@ -113,6 +125,10 @@ class DoublyLinkedList {
     this.length--;
     return node;
   }
+  //Set the nth node from head with a value. O(n) operation because you must traverse
+  //the DLL to access the node and then set new value. Returns boolean for if
+  //the set was successful
+  //Edge cases: nth node doesn't exist.
   set(idx, val) {
     if (idx > this.length) return false;
     let nodeCount = 0;
@@ -124,6 +140,9 @@ class DoublyLinkedList {
     node.val = val;
     return true;
   }
+  //Get the nth node from head value. O(n) operation because you must traverse
+  //the DLL to access the value. Returns the node
+  //Edge cases: nth node doesn't exist.
   get(idx) {
     if (this.length < idx) return null;
     let nodeCount = 0;
@@ -134,6 +153,9 @@ class DoublyLinkedList {
     }
     return node;
   }
+  //Inserts a new node in front of the nth node from head. O(n) operation because you must traverse
+  //the DLL to access the node and then detach it.
+  //Edge cases: Remove from beginning, end or if there is only one node.
   insert(idx, val) {
     if (this.length < idx) return false;
     if (idx < 0) return false;
@@ -157,6 +179,8 @@ class DoublyLinkedList {
     this.length++;
     return true;
   }
+  //Reverses a doubly linked list. This is an O(n) time operation. Key points
+  //to remember are to change the head and tail.
   reverse() {
     if (this.length === 0) return null;
     let node = this.head;
